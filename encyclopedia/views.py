@@ -60,7 +60,9 @@ def create_page(request):
 
 def edit_page(request, title):
     if request.method == "POST":
+        print(f"Title: {title}")
         content = request.POST.get('content')
+        print(f"content: {content}")
         content = re.sub(r'\n{2,}', '\n', content.replace('\r\n', '\n').replace('\r', '\n'))
         util.save_entry(title, content)
         return redirect('wiki:title', title=title)
