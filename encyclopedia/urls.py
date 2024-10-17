@@ -4,6 +4,7 @@ from . import views
 
 app_name = 'wiki'
 urlpatterns = [
+    path('', RedirectView.as_view(url='wiki')),
     path("wiki", views.index, name="index"),
     path("wiki/<str:title>", views.title, name="title"),
     path("search/", views.search, name="search"),
