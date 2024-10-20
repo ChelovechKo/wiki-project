@@ -1,6 +1,5 @@
 from django.shortcuts import render, redirect
 import re
-import markdown
 from . import util
 import random
 
@@ -12,14 +11,13 @@ def index(request):
 def title(request, title):
     content = util.get_entry(title)
     if content:
-        #markdown_html_content = markdown.markdown(content)
         re_html_content = util.convert_markdown_to_html(content)
         return render(request, "encyclopedia/title.html", {
-            "title": title.upper(),
+            "title": title,
             "title_content": re_html_content
         })
     return render(request, "encyclopedia/page_not_found.html", {
-        "title": title.upper()
+        "title": title
     })
 
 def search(request):
@@ -59,18 +57,27 @@ def create_page(request):
 
 
 def edit_page(request, title):
+    new_title = title
     if request.method == "POST":
-        print(f"Title: {title}")
+        new_title = request.POST.get('new_title')
         content = request.POST.get('content')
-        print(f"content: {content}")
         content = re.sub(r'\n{2,}', '\n', content.replace('\r\n', '\n').replace('\r', '\n'))
-        util.save_entry(title, content)
-        return redirect('wiki:title', title=title)
+        util.save_entry(new_title, content)
+        return redirect('wiki:title', title=new_title)
 
-    content = util.get_entry(title)
+    content = util.get_entry(new_title)
     content = re.sub(r'\n{2,}', '\n', content)
 
     return render(request, "encyclopedia/edit.html", {
-        "title": title,
+        "title": new_title,
         "content": content
+    })
+
+def delete_page(request, title):
+    if request.method == "POST":
+        util.delete_entry(title)
+        return redirect('wiki:index')
+
+    return render(request, "encyclopedia/delete.html", {
+        "title": title
     })

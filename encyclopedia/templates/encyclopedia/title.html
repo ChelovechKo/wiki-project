@@ -5,9 +5,8 @@
 {% endblock %}
 
 {% block body %}
-    <a href="{% url 'wiki:edit' title %}">Edit</a>
-
-    <h1>{{ title }}</h1>
+    <a href="{% url 'wiki:edit' title %}">Edit</a> |
+    <a href="{% url 'wiki:delete' title %}">Delete</a>
 
     {{ title_content|safe }}
 

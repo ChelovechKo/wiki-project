@@ -12,4 +12,5 @@ urlpatterns = [
     path("random/", views.random_page, name="random"),
     path("create/", views.create_page, name="create"),
     path("edit/<str:title>", views.edit_page, name="edit"),
+    path("delete/<str:title>", views. delete_page, name="delete"),
 ]

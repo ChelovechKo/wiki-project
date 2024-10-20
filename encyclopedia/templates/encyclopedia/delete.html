@@ -1,0 +1,30 @@
+{% extends "encyclopedia/layout.html" %}
+
+{% block title %}
+    Delete {{ title }}
+{% endblock %}
+
+{% block body %}
+    <h3>Are you sure you want to delete "{{ title }}"?</h3>
+
+    <div style="display: inline;">
+        <form action="{% url 'wiki:delete' title %}" method="post" style="display: inline;">
+            {% csrf_token %}
+            <button type="submit" style="color: red; background: none; border: none; cursor: pointer;">
+                Confirm
+            </button>
+        </form>|
+
+        <a href="{% url 'wiki:title' title %}">
+            <button type="button" style="color: blue; background: none; border: none; cursor: pointer;">
+                Cancel
+            </button>
+        </a>
+    </div>
+
+    <style>
+        button:hover {
+            text-decoration: underline;
+        }
+    </style>
+{% endblock %}

@@ -9,6 +9,9 @@
 
     <form action="{% url 'wiki:edit' title %}" method="post">
         {% csrf_token %}
+        <label for="title">Title:</label><br>
+        <input type="text" id="title" name="new_title" value="{{ title }}" required><br><br>
+
         <label for="content">Content (Markdown):</label><br>
         <textarea id="content" name="content" rows="20" required>{{ content }}</textarea><br><br>
         <input type="submit" value="Save Changes">
